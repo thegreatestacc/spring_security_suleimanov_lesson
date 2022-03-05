@@ -1,6 +1,7 @@
 package com.example.springsecuritydemo.controller;
 
 import com.example.springsecuritydemo.model.Person;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class PersonRestControllerV1 {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('persons:read')")
     public Person getById(@PathVariable Long id) {
         return PERSONS.stream()
                 .filter(person -> person.getId().equals(id))
@@ -31,12 +33,14 @@ public class PersonRestControllerV1 {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('persons:write')")
     public Person create(@RequestBody Person person) {
         PERSONS.add(person);
         return person;
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('persons:write')")
     public void deleteById(@PathVariable Long id) {
         PERSONS.removeIf(person -> person.getId().equals(id));
     }
