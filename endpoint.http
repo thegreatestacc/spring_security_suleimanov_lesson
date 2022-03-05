@@ -1,0 +1,5 @@
+### get all persons
+GET localhost:8080/api/v1/persons
+
+### get person by id
+GET http://localhost:8080/api/v1/persons/1
