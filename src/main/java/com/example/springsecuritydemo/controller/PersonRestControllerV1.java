@@ -1,10 +1,7 @@
 package com.example.springsecuritydemo.controller;
 
 import com.example.springsecuritydemo.model.Person;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +28,17 @@ public class PersonRestControllerV1 {
                 .filter(person -> person.getId().equals(id))
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @PostMapping
+    public Person create(@RequestBody Person person) {
+        PERSONS.add(person);
+        return person;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        PERSONS.removeIf(person -> person.getId().equals(id));
     }
 
 }
